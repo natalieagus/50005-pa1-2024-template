@@ -9,17 +9,17 @@ void read_command(char **cmd)
   // Initialize count to keep track of the number of characters read
   int count = 0, i = 0;
   // Array to hold pointers to the parsed command arguments
-  char *array[MAX_ARGS], *commandToken;
+  char *array[MAX_ARGS], *command_token;
 
   // Infinite loop to read characters until a newline or maximum line length is reached
   for (;;)
   {
     // Read a single character from standard input
-    int currentChar = fgetc(stdin);
+    int current_char = fgetc(stdin);
     // Store the character in the line array and increment count
-    line[count++] = (char)currentChar;
+    line[count++] = (char)current_char;
     // If a newline character is encountered, break out of the loop
-    if (currentChar == '\n')
+    if (current_char == '\n')
       break;
     // If the command exceeds the maximum length, print an error and exit
     if (count >= MAX_LINE)
@@ -36,13 +36,13 @@ void read_command(char **cmd)
     return;
 
   // Use strtok to parse the first token (word) of the command
-  commandToken = strtok(line, " \n");
+  command_token = strtok(line, " \n");
 
   // Continue parsing the line into words and store them in the array
-  while (commandToken != NULL)
+  while (command_token != NULL)
   {
-    array[i++] = strdup(commandToken);  // Duplicate the token and store it
-    commandToken = strtok(NULL, " \n"); // Get the next token
+    array[i++] = strdup(command_token);  // Duplicate the token and store it
+    command_token = strtok(NULL, " \n"); // Get the next token
   }
 
   // Copy the parsed command and its parameters to the cmd array
@@ -90,12 +90,12 @@ int main(void)
     return 0;
 
   // Formulate the full path of the command to be executed
-  char fullPath[PATH_MAX];
+  char full_path[PATH_MAX];
   char cwd[1024];
   if (getcwd(cwd, sizeof(cwd)) != NULL)
   {
 
-    snprintf(fullPath, sizeof(fullPath), "%s/bin/%s", cwd, cmd[0]);
+    snprintf(full_path, sizeof(full_path), "%s/bin/%s", cwd, cmd[0]);
   }
   else
   {
@@ -103,7 +103,7 @@ int main(void)
     exit(1);
   }
 
-  execv(fullPath, cmd);
+  execv(full_path, cmd);
 
   // If execv returns, command execution has failed
   printf("Command %s not found\n", cmd[0]);
