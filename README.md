@@ -8,8 +8,8 @@ The project is organized as follows:
 
 - `bin/` - Contains compiled executables for system programs.
   - `find` - Program to find files.
-  - `ld` - Program for loading files.
-  - `ldr` - Program to load and run files.
+  - `ld` - Program for listing the contents of the current directory.
+  - `ldr` - Program for listing the contents of the current directory recursively.
 - `cseshell` - The main executable for the CSEShell.
 - `files/` - Contains various test files used with the shell and system programs.
   - `combined.txt`, `file1.txt`, `file2.txt`, ... - Test text files.
@@ -43,10 +43,10 @@ From there, you can execute built-in commands and any of the included system pro
 ## System Programs
 
 - `find.c` - Searches for files in a directory.
-- `ld.c` - List the contents of a directory.
-- `ldr.c` - List the contents of a directory recursively.
+- `ld.c` - List the contents of the curent directory.
+- `ldr.c` - List the contents of the current directory recursively.
 
-Each program can be executed from the CSEShell once it is running.
+Each program can be executed from the CSEShell once it is running. This starter code only allows the shell to execute a command once before exiting because `execv` replace the entire process' address space. Students need to fix this and allow the shell to prompt for more commands in Programming Assignment 1.
 
 ## Files Directory
 
