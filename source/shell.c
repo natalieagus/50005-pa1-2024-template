@@ -91,7 +91,17 @@ int main(void)
 
   // Formulate the full path of the command to be executed
   char fullPath[PATH_MAX];
-  snprintf(fullPath, sizeof(fullPath), "./bin/%s", cmd[0]);
+  char cwd[1024];
+  if (getcwd(cwd, sizeof(cwd)) != NULL)
+  {
+
+    snprintf(fullPath, sizeof(fullPath), "%s/bin/%s", cwd, cmd[0]);
+  }
+  else
+  {
+    printf("Failed to get current working directory.");
+    exit(1);
+  }
 
   execv(fullPath, cmd);
 
@@ -104,6 +114,7 @@ int main(void)
   {
     free(cmd[i]);
   }
+  memset(cwd, '\0', sizeof(cwd)); // clear the cwd array
 
   return 0;
 }
