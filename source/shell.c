@@ -1,9 +1,11 @@
-// Include the shell header file for necessary constants and function declarations
+// This code was written by ChatGPT4
+// Modify it for your own usage to implement features for PA1 (or completely
+// rewrite it) Include the shell header file for necessary constants and
+// function declarations
 #include "shell.h"
 
 // Function to read a command from the user input
-void read_command(char **cmd)
-{
+void read_command(char **cmd) {
   // Define a character array to store the command line input
   char line[MAX_LINE];
   // Initialize count to keep track of the number of characters read
@@ -11,9 +13,9 @@ void read_command(char **cmd)
   // Array to hold pointers to the parsed command arguments
   char *array[MAX_ARGS], *command_token;
 
-  // Infinite loop to read characters until a newline or maximum line length is reached
-  for (;;)
-  {
+  // Infinite loop to read characters until a newline or maximum line length is
+  // reached
+  for (;;) {
     // Read a single character from standard input
     int current_char = fgetc(stdin);
     // Store the character in the line array and increment count
@@ -22,8 +24,7 @@ void read_command(char **cmd)
     if (current_char == '\n')
       break;
     // If the command exceeds the maximum length, print an error and exit
-    if (count >= MAX_LINE)
-    {
+    if (count >= MAX_LINE) {
       printf("Command is too long, unable to process\n");
       exit(1);
     }
@@ -39,15 +40,13 @@ void read_command(char **cmd)
   command_token = strtok(line, " \n");
 
   // Continue parsing the line into words and store them in the array
-  while (command_token != NULL)
-  {
+  while (command_token != NULL) {
     array[i++] = strdup(command_token);  // Duplicate the token and store it
     command_token = strtok(NULL, " \n"); // Get the next token
   }
 
   // Copy the parsed command and its parameters to the cmd array
-  for (int j = 0; j < i; j++)
-  {
+  for (int j = 0; j < i; j++) {
     cmd[j] = array[j];
   }
   // Null-terminate the cmd array to mark the end of arguments
@@ -55,12 +54,10 @@ void read_command(char **cmd)
 }
 
 // Function to display the shell prompt
-void type_prompt()
-{
+void type_prompt() {
   // Use a static variable to check if this is the first call to the function
   static int first_time = 1;
-  if (first_time)
-  {
+  if (first_time) {
     // Clear the screen on the first call
 #ifdef _WIN32
     system("cls"); // Windows command to clear screen
@@ -74,8 +71,7 @@ void type_prompt()
 }
 
 // The main function where the shell's execution begins
-int main(void)
-{
+int main(void) {
   // Define an array to hold the command and its arguments
   char *cmd[MAX_ARGS];
   int child_status;
@@ -92,13 +88,10 @@ int main(void)
   // Formulate the full path of the command to be executed
   char full_path[PATH_MAX];
   char cwd[1024];
-  if (getcwd(cwd, sizeof(cwd)) != NULL)
-  {
+  if (getcwd(cwd, sizeof(cwd)) != NULL) {
 
     snprintf(full_path, sizeof(full_path), "%s/bin/%s", cwd, cmd[0]);
-  }
-  else
-  {
+  } else {
     printf("Failed to get current working directory.");
     exit(1);
   }
@@ -108,13 +101,4 @@ int main(void)
   // If execv returns, command execution has failed
   printf("Command %s not found\n", cmd[0]);
   exit(0);
-
-  // Free the allocated memory for the command arguments before exiting
-  for (int i = 0; cmd[i] != NULL; i++)
-  {
-    free(cmd[i]);
-  }
-  memset(cwd, '\0', sizeof(cwd)); // clear the cwd array
-
-  return 0;
 }
